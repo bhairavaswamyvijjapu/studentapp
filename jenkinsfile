@@ -9,7 +9,7 @@ pipeline {
         maven 'maven'
         }   
     stages {
-        stage ('Initialize') {
+        stage ('Initialize-maven') {
             steps {
                 sh '''
                     echo "PATH = ${PATH}"
@@ -28,7 +28,7 @@ pipeline {
 	    }
                
 	    
-	  stage('Deploy Image') {
+	  stage('Deploy Image to docker hub') {
 	  steps{    
 	  script {
 	        docker.withRegistry( '', registryCredential ) {
