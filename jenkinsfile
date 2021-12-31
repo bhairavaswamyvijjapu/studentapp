@@ -1,6 +1,6 @@
 pipeline {
     environment {
-    registry = "viswamy/studentapprestapi"
+    registry = "viswamy/studentapp-restapi-docker"
     registryCredential = 'dockerhub'
     dockerImage = ''
     }
