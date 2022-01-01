@@ -42,6 +42,11 @@ pipeline {
 	    sh "docker rmi $registry:$BUILD_NUMBER"
 	  }
 	}
+	stage ('Initialize-maven') {
+            steps {
+               sh 'kubectl apply -f studentapp-deployment.yaml'
+            }
+        }
 	 
     }
 }
