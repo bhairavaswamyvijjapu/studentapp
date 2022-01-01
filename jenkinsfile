@@ -45,6 +45,7 @@ pipeline {
 	stage ('Initialize-maven') {
             steps {
                sh 'kubectl apply -f studentapp-deployment.yaml'
+	       sh 'kubectl set image deployment/studentapp-rest-api studentapp-rest-api=viswamy/studentapp-restapi-docker:${BUILD_NUMBER}'
             }
         }
 	 
