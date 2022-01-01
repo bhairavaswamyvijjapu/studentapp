@@ -1,0 +1,80 @@
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: lb-service
+#   labels:
+#     app: lb-service
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 80
+#   selector:
+#     app: frontend-nginxapp
+
+# ---
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: frontend-nginxapp
+#   labels: 
+#     app: frontend-nginxapp
+#     tier: frontend
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: frontend-nginxapp
+#   template: 
+#     metadata:
+#       labels:
+#         app: frontend-nginxapp
+#         tier: frontend
+#     spec:
+#       containers:
+#         - name: frontend-nginxapp
+#           image: viswamy/myrestapi:v1
+#           ports:
+#             - containerPort: 8080
+            
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-rest-api
+  labels:
+    app: hello-world-rest-api
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: hello-world-rest-api
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-rest-api
+  labels: 
+    app: hello-world-rest-api
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world-rest-api
+  template: 
+    metadata:
+      labels:
+        app: hello-world-rest-api
+        tier: frontend
+    spec:
+      containers:
+        - name: hello-world-rest-api
+          image: viswamy/studentapprestapi:v1
+          ports:
+            - containerPort: 8080
+            
