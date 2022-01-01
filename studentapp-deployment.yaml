@@ -73,7 +73,7 @@ spec:
         tier: frontend
     spec:
       containers:
-        - name: hello-world-rest-api
+        - name: studentapp-rest-api
           image: viswamy/studentapp-restapi-docker:v1
           ports:
             - containerPort: 8080
