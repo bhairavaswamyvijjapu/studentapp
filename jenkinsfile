@@ -44,6 +44,7 @@ pipeline {
 	}
 	stage ('Deploy to EKS cluster') {
             steps {
+	       sh kubectl apply -f role.yaml serviceaccount.yaml rolebinding.yaml -n default
                sh 'kubectl apply -f studentapp-deployment.yaml'
 	       sh 'kubectl set image deployment/studentapp-rest-api studentapp-rest-api=viswamy/studentapp-restapi-docker:${BUILD_NUMBER}'
             }
