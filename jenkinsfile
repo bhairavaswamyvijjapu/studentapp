@@ -42,7 +42,7 @@ pipeline {
 	    sh "docker rmi $registry:$BUILD_NUMBER"
 	  }
 	}
-	stage ('Initialize-maven') {
+	stage ('Deploy to EKS cluster') {
             steps {
                sh 'kubectl apply -f studentapp-deployment.yaml'
 	       sh 'kubectl set image deployment/studentapp-rest-api studentapp-rest-api=viswamy/studentapp-restapi-docker:${BUILD_NUMBER}'
