@@ -107,7 +107,7 @@ metadata:
  name: jenkins-account
  namespace: default
  annotations:
-  eks.amazonaws.com/role-arn: arn:aws:iam::491655376147:user/viswamy
+  eks.amazonaws.com/role-arn: cluster-admin
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
