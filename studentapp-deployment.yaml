@@ -74,7 +74,7 @@ spec:
     spec:
       containers:
         - name: studentapp-rest-api
-          image: viswamy/studentapp-restapi-docker:v1
+          image: viswamy/studentapp-restapi-docker:latest
           ports:
             - containerPort: 8080
             
