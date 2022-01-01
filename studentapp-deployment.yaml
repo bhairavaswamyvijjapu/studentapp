@@ -77,4 +77,48 @@ spec:
           image: viswamy/studentapp-restapi-docker:latest
           ports:
             - containerPort: 8080
+
             
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: jenkins-role
+  namespace: dafault
+rules:
+- apiGroups: [“”]
+  resources: [“pods”]
+  verbs: [“create”,”delete”,”get”,”list”,”patch”,”update”,”watch”]
+- apiGroups: [“”]
+  resources: [“pods/exec”]
+  verbs: [“create”,”delete”,”get”,”list”,”patch”,”update”,”watch”]
+- apiGroups: [“”]
+  resources: [“pods/log”]
+  verbs: [“get”,”list”,”watch”]
+- apiGroups: [“”]
+  resources: [“secrets”]
+  verbs: [“get”]
+  
+  
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+ name: jenkins-account
+ namespace: default
+ annotations:
+  eks.amazonaws.com/role-arn: arn:aws:iam::491655376147:user/viswamy
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-role-binding
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: jenkins-role
+subjects:
+- kind: ServiceAccount
+  name: jenkins-account
+  namespace: default
