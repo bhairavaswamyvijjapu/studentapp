@@ -44,32 +44,32 @@ kind: Service
 metadata:
   name: hello-world-rest-api
   labels:
-    app: hello-world-rest-api
+    app: studentapp-rest-api
 spec:
   type: LoadBalancer
   ports:
   - port: 8080
   selector:
-    app: hello-world-rest-api
+    app: studentapp-rest-api
 
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-rest-api
+  name: studentapp-rest-api
   labels: 
-    app: hello-world-rest-api
+    app: studentapp-rest-api
     tier: frontend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hello-world-rest-api
+      app: studentapp-rest-api
   template: 
     metadata:
       labels:
-        app: hello-world-rest-api
+        app: studentapp-rest-api
         tier: frontend
     spec:
       containers:
