@@ -44,7 +44,7 @@ pipeline {
 	}
 	stage ('Deploy to EKS cluster') {
 	       steps {
-	       kubeconfig(credentialsId: 'kube-config', serverUrl: 'https://87DEDADCD32DAC3E35969E36FA284E0C.gr7.us-east-2.eks.amazonaws.com', clusterName: 'ekstest') {
+	       kubeconfig(credentialsId: 'kube-config', serverUrl: 'https://87DEDADCD32DAC3E35969E36FA284E0C.gr7.us-east-2.eks.amazonaws.com') {
                
                sh 'kubectl apply -f studentapp-deployment.yaml'
 	       sh 'kubectl set image deployment/studentapp-rest-api studentapp-rest-api=viswamy/studentapp-restapi-docker:${BUILD_NUMBER}'
