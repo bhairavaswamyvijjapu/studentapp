@@ -45,7 +45,6 @@ pipeline {
 	stage ('Deploy to EKS cluster') {
             steps {
 	       sh script: '''
-	       'kubectl version'
 	       'kubectl apply -f studentapp-deployment.yaml'
 	       'kubectl set image deployment/studentapp-rest-api studentapp-rest-api=viswamy/studentapp-restapi-docker:${BUILD_NUMBER}'
 	       '''
