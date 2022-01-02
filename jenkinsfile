@@ -45,9 +45,10 @@ pipeline {
 	stage ('Deploy to EKS cluster') {
             steps {
 	       sh script: '''
-	       curl -LO 'https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-               chmod +x ./kubectl'
-               'kubectl apply -f studentapp-deployment.yaml'
+	       'curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl'
+               'chmod +x kubectl'
+	       'mv kubectl /usr/local/bin/kubectl'
+	       'kubectl apply -f studentapp-deployment.yaml'
 	       'kubectl set image deployment/studentapp-rest-api studentapp-rest-api=viswamy/studentapp-restapi-docker:${BUILD_NUMBER}'
 	       '''
             }
