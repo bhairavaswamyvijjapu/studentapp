@@ -15,7 +15,7 @@ public class StudentController {
 	@GetMapping("/getAllStudents")
 	public List<Student> getStudents() {
 		List<Student> list = new ArrayList<>();
-		Student s1 = new Student(101, "swamy1", "8121212121", "sivakumar@capgemini.com", "hyderabad");
+		Student s1 = new Student(101, "siva", "8121212121", "sivakumar@capgemini.com", "hyderabad");
 		Student s2 = new Student(102, "jagadeesh", "9987473632", "jagadeesh@capgemini.com", "Banglore");
 		Student s3 = new Student(103, "kishore", "9752727277", "kishore@capgemini.com", "chennai");
 		list.add(s1);
