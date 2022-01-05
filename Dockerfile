@@ -32,7 +32,7 @@
 # ENTRYPOINT ["java","-jar","studentapp-0.0.1-SNAPSHOT.jar"]
 
 FROM java:8
-# EXPOSE 8082
+EXPOSE 8080
 MAINTAINER Swamy
 # RUN mvn clean install
 # RUN apt-get update && apt-get install -y docker.io 267 && rm -rf /var/lib/apt/lists/*
