@@ -1,2 +1,0 @@
-# studentapp
-studentapptesting
