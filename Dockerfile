@@ -37,5 +37,14 @@ MAINTAINER Swamy
 # RUN mvn clean install
 # RUN apt-get update && apt-get install -y docker.io 267 && rm -rf /var/lib/apt/lists/*
 ADD /target/studentapp-0.0.1-SNAPSHOT.jar studentapp-0.0.1-SNAPSHOT.jar
+RUN apt-get update && \
+    apt-get install -y openjdk-8-jdk && \
+    apt-get install -y ant && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/ && \
+    rm -rf /var/cache/oracle-jdk8-installer;
+
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN export JAVA_HOME
 # COPY /var/jenkins_home/workspace/docker-test/target/studentapp-0.0.1-SNAPSHOT.jar studentapp-0.0.1-SNAPSHOT.jar
 ENTRYPOINT ["java","-jar","studentapp-0.0.1-SNAPSHOT.jar"]
