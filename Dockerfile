@@ -34,21 +34,6 @@
 FROM java:8
 EXPOSE 8080
 MAINTAINER Swamy
-# Install OpenJDK-8
-RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get install -y ant && \
-    apt-get clean;
-# Fix certificate issues
-RUN apt-get update && \
-    apt-get install ca-certificates-java && \
-    apt-get clean && \
-    update-ca-certificates -f \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/cache/oracle-jdk8-installer
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
 # RUN mvn clean install
 # RUN apt-get update && apt-get install -y docker.io 267 && rm -rf /var/lib/apt/lists/*
 ADD /target/studentapp-0.0.1-SNAPSHOT.jar studentapp-0.0.1-SNAPSHOT.jar
