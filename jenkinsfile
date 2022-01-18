@@ -45,21 +45,7 @@ pipeline {
 	    sh "docker rmi $registry:latest"
 	  }
 	}
-	stage('SonarCloud') {
-  environment {
-    SCANNER_HOME = tool 'studentapp'
-    ORGANIZATION = "studentapp-github"
-    PROJECT_NAME = "studentapp"
-  }
-  steps {
-    withSonarQubeEnv('studentapp') {
-        sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-        -Dsonar.java.binaries=build/classes/java/ \
-        -Dsonar.projectKey=$PROJECT_NAME \
-        -Dsonar.sources=.'''
-    }
-  }
-}
+	
 	stage ('Deploy to EKS cluster') {
 	     steps{
                 kubernetesDeploy(
