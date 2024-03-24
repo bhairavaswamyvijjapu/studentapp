@@ -17,7 +17,7 @@
 def variablesMap = [
     global: [
         'REGION_NAME': 'us-east-2',
-        'REGISTRY_ECR': '637423557756.dkr.ecr.us-east-1.amazonaws.com',
+        'REGISTRY_ECR': '637423557756.dkr.ecr.us-east-2.amazonaws.com',
         'APP_NAME': 'helm-backend'
     ],  
     local: [
