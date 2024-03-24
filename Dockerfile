@@ -9,7 +9,7 @@ RUN groupadd -r jenkins && useradd --no-log-init -r -g jenkins jenkins
 
 RUN sh -c 'mkdir -p /opt/helm && mkdir -p /opt/tls'
 
-COPY ./target/hipwebplannerbe-${VERSION}.jar /opt/helm/hipwebplannerbe.jar
+COPY ./target/studentapp-0.0.1-SNAPSHOT.jar /opt/helm/studentapp-0.0.1-SNAPSHOT.jar
 
 
 WORKDIR /opt/helm
@@ -19,6 +19,6 @@ RUN chown -R jenkins:jenkins /opt/helm
 # Switch to the new user
 USER jenkins
 
-RUN sh -c 'touch hipwebplannerbe.jar'
+RUN sh -c 'touch studentapp-0.0.1-SNAPSHOT.jar'
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD [ "/" ]
-ENTRYPOINT ["java","-jar","hipwebplannerbe.jar"]
+ENTRYPOINT ["java","-jar","studentapp-0.0.1-SNAPSHOT.jar"]
