@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Pod
+spec:
+  serviceAccount: default
+  volumes:
+    - name: dind-storage
+      emptyDir: {}
+
+  containers:
+    - name: maven3
+      # image: maven:3.6.3-jdk-8
+      image: maven:3.8.3-amazoncorretto-17
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+
+    - name: sonar
+      image: timbru31/java-node:latest
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+
+    - name: trivy
+      image: bitnami/trivy:latest
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+
+    - name: aquasec-trivy
+      image: aquasec/trivy
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+
+
+    - name: dind
+      image: docker:18.05-dind
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/docker
+          name: dind-storage
+      tty: true
+
+    - name: newmandocker
+      image: dannydainton/htmlextra:latest
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/docker
+          name: dind-storage
+      runAsUser: 1000
+      capabilities:
+        add: ["IPC_LOCK"]
+      command:
+        - cat
+      tty: true
+
+    - name: aws-cli
+      image: amazon/aws-cli:2.1.39
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/docker
+          name: dind-storage
+      command:
+        - cat
+      tty: true
