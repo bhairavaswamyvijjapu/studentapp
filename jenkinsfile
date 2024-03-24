@@ -1,59 +1,37 @@
-pipeline {
-    environment {
-    registry = "viswamy/studentapp-restapi-docker"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-    }
-    agent any     
-    tools{
-        maven 'maven'
-	jdk  'jdk'
-        }   
-    stages {
-        stage ('Initialize-maven') {
-            steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-		    echo  "JAVA_Home = ${JAVA_HOME}"
-		     java -version
-                     mvn --version
-                     mvn clean package'''
-            }
-        }
-	
-	stage('Building image') {
-	   steps{
-	   script {
-		 dockerImage = docker.build registry + ":latest"
-		}
-	      }
-	    }
-               
-	    
-	  stage('Deploy Image to docker hub') {
-	  steps{    
-	  script {
-	        docker.withRegistry( '', registryCredential ) {
-		dockerImage.push()
-	      }
-	    }
-	  }
-        }
-	stage('Remove Unused docker image') {
-	  steps{
-	    sh "docker rmi $registry:latest"
-	  }
-	}
-	
-	stage ('Deploy to EKS cluster') {
-	     steps{
-                kubernetesDeploy(
-                    configs: 'studentapp-deployment.yaml',
-                    kubeconfigId: 'K8S',
-                    enableConfigSubstitution: true
-                    )  
-        }
-      } 
-    }
-}
+@Library(value='shared@main', changelog=false) _
+   
+
+// Pipeline supported branches names pattern:
+// dev
+// master
+// Release/*/dev
+// Release/*/master
+
+// variables map is needed for pipeline execution, global parameters are set as environment variables by default,
+// local parameters are set based on a conditions described in mainBackend method
+
+// VERSION varibale is used to tag dockerimage in ECR,
+// for dev and Release/*/dev development VERSION will be used hence image will be pushed with SNAPSHOT tag 
+// for builds from master or Release/*/master branches release VERSION will be used, tags will be pushed accoring to the variable
+
+def variablesMap = [
+    global: [
+        'REGION_NAME': 'us-east-2',
+        'REGISTRY_ECR': '637423557756.dkr.ecr.us-east-1.amazonaws.com',
+        'APP_NAME': 'helm-backend'
+    ],  
+    local: [
+        dev: [
+            'VERSION': '01.00'
+        ],
+        master: [
+            'VERSION': '01.00'
+        ],
+        test: [
+            'VERSION': '01.00'
+        ]
+
+    ]
+]
+
+mainBackend(variablesMap)
